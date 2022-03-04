@@ -1,6 +1,8 @@
 <?php
 
-use App\Http\Controllers\BlogController;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,10 +17,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login2');
 });
 
-Route::get('/home', [BlogController::class, 'home']);
-Route::get('/kontak',[BlogController::class, 'kontak']);
-Route::get('/tentang',[BlogController::class, 'tentang']);
-
+Route::get('/dashboard', [DashboardController::class, 'index']);
+Route::get('/user-profile', [DashboardController::class, 'profile']);
+Route::get('/list-post', [PostController::class, 'index']);
+Route::get('/list-article', [ArticleController::class, 'index'])->name('article.index');
+Route::get('/add-post', [PostController::class, 'create']);
+Route::get('/edit-post', [PostController::class, 'edit']);
