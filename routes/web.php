@@ -26,3 +26,5 @@ Route::get('/list-post', [PostController::class, 'index']);
 Route::get('/list-article', [ArticleController::class, 'index'])->name('article.index');
 Route::get('/add-post', [PostController::class, 'create']);
 Route::get('/edit-post', [PostController::class, 'edit']);
+
+Route::resource('/list-article', ArticleController:: class);

@@ -10,7 +10,7 @@
                     <div class="row ml-3">
                     <h4 class="card-title">{{ $title }}</h4>
                     <div class="d-flex ml-3">
-                        <a href="/add-post" class="btn btn-primary">Create Post</a>
+                        <a href="/list-article/create" class="btn btn-primary">Create Post</a>
                     </div>
                     </div>
                 </div>
@@ -39,13 +39,17 @@
                                     <td> {{$article->title}} </td>
                                     <td> {{$article->description}} </td>
                                     <td> {{$article->slug}} </td>
-                                    <td>
-                                        <form method="" action="">
-                                            <a button type="button" class="btn btn-primary" href="#">Read</button></a>
-                                            <a button type="button" class="btn btn-warning" href="/edit-post">Edit</button></a>
-                                            <button type="submit" class="btn btn-danger">Delete</button>
-                                        </form>
-                                    </td>
+                                    <td> {{$article->body}} </td>
+                                   <td>
+                                       <a href="/list-article/{{$article->id}}/edit" class="btn btn warning">edit</a>
+                                   </td>
+                                   <td>
+                                       <form action="/list-article/{{$article->id}}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <input type="submit" value="Delete" class="btn btn-danger">
+                                    </form>
+                                   </td>
                                 </tr>
                                 @endforeach
                             </tbody>

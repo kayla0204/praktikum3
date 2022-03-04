@@ -29,6 +29,10 @@ class ArticleController extends Controller
     public function create()
     {
         //
+        $data = [
+            'title' => 'Creative Article'
+        ];
+        return view('admin.article.create', $data);
     }
 
     /**
@@ -40,6 +44,20 @@ class ArticleController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'title' => 'required|unique:articles|max:100',
+            'description' => 'required',
+            'slug' => 'required',
+            'body' => 'required'
+        ]);
+
+        $article = new Article();
+        $article->title = $request->title;
+        $article->description = $request->description;
+        $article->slug = $request->slug;
+        $article->body = $request->body;
+        $article->save();
+        return redirect('list-article');
     }
 
     /**
@@ -62,7 +80,13 @@ class ArticleController extends Controller
     public function edit($id)
     {
         //
-    }
+        $data = [
+            'title' => 'Edit Articles',
+            'method'=> 'PUT',
+            'article' => Article::find($id)
+        ];
+        return view('admin.article.edit', $data);
+        }
 
     /**
      * Update the specified resource in storage.
@@ -74,6 +98,13 @@ class ArticleController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $article= Article::find($id);
+        $article->title = $request->title;
+        $article->description = $request->description;
+        $article->slug = $request->slug;
+        $article->body = $request->body;
+        $article->update();
+        return redirect('list-article');
     }
 
     /**
@@ -85,5 +116,7 @@ class ArticleController extends Controller
     public function destroy($id)
     {
         //
+        Article::destroy($id);
+        return redirect('/list-article');
     }
 }
